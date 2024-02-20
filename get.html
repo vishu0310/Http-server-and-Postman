@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Form</title>
+</head>
+<style>
+    body {
+        
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+    .button-container {
+        text-align: center;
+    }
+    .blue-button {
+        background-color: blue;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        margin: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .container{
+        background-color: rgba(0, 0, 0, 0.501);
+        color: black;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        top: 50%;
+        bottom: 50%;
+        margin: auto;
+        padding: auto;
+
+    }
+
+    #result{
+        background-color: bisque;
+        color: black;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        top: 50%;
+        bottom: 50%;
+        margin: auto;
+        padding: auto;
+    }
+    .assignment{
+        background-color: rgba(0, 0, 0, 0.501);
+        color: black;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        top: 50%;
+        bottom: 50%;
+        margin: auto;
+        padding: auto;
+    }
+    .button-container button{
+        color: rgb(0, 0, 0);
+        background-color:rgb(233, 187, 21);
+    }
+</style>
+<body>
+
+    
+
+    <div class="assignment">
+        <h2> Computer Newtork Assignment Lab 3</h2>
+        <h3>Name: Vishu Patle <br> Roll No. UI22EC87</h3>
+        <h3></h3>
+
+
+    </div>
+
+<div class="container">
+    <h1>Welcome to Vishu's http Server</h1>
+    <h2>Please Submit the Form</h2>
+    <form action="/submit-form" method="POST" id="myForm">
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username"><br>
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email"><br><br>
+        <button type="submit">POST</button>
+    </form>
+</div>
+<br>
+<br>
+<div class="button-container">
+    <button class="get" >GET</button>
+    <button class="post">POST</button>
+    <button class="put">PUT</button>
+    <button class="head">HEAD</button>
+    <button class="delete">DELETE</button>
+</div>
+<br>
+<br>
+    <div id="result"></div>
+    
+
+    <script>
+        const form = document.getElementById('myForm');
+        const resultDiv = document.getElementById('result');
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const formData = new FormData(form);
+            const jsonData = {};
+
+            for (const [key, value] of formData.entries()) {
+                jsonData[key] = value;
+            }
+
+            try {
+                const response = await fetch('/submit-form', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(jsonData)
+                });
+
+                const data = await response.json();
+                resultDiv.textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                resultDiv.textContent = 'Error submitting form. Please try again.';
+            }
+        });
+    </script>
+</body>
+</html>
